@@ -37,7 +37,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third party apps 
+    'rest_framework', 
+    'corsheaders',
+    'channels',
+
+    # Local Apps
+    'chat',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ],
+    'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE' : 50
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,7 +63,21 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # corsheader middleware
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+# Settings untuk development
+CORS_ALLOW_ALL_ORIGINS = True # Hanya untuk development! rubah, saat sudah masuk ke tahap production 
+
+ASGI_APPLICATION = 'yuenmibackendcore.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default' : {
+        'BACKEND' : 'channels.layers.inMemoryChannelLayer'
+    }
+}
 
 ROOT_URLCONF = 'yuenmibackendcore.urls'
 
